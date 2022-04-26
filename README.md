@@ -1,2 +1,2 @@
 # FEMA_EMarin
-Analyzing distribution of FEMA assistance in Florida and Texas based on income levels and race
+Analyzing distribution of FEMA assistance in Lousiana based on income levels and race
