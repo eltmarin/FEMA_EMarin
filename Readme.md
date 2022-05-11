@@ -1,10 +1,9 @@
 Readme
 
 # FEMA Assistance Trends across Income and Race Indicators
-This project seeks to visualize FEMA assistance trends across income and race indicators for the Indiviudals and Households Program (IHP). IHP provides funds directly to individuals who have been affected by a FEMA declared disaster. In response to concerns that FEMA does not equitably distribute its assistance, this project visualizes assistance trends at the county and zip code level for a state of interest. Initially designed to visualize and map assistance trends in Louisiana, this project can be potetnailly used for other states by changing a part of the code in script 1B_fips data clean.py to a state of interest.
+This project seeks to visualize FEMA assistance trends across income and race indicators for the Individuals and Households Program (IHP). IHP provides funds directly to individuals who have been affected by a FEMA-declared disaster. In response to concerns that FEMA does not equitably distribute its assistance, this project visualizes assistance trends at the county and zip code level for a state of interest. Initially designed to visualize and map assistance trends in Louisiana, this project can be potentially used for other states by changing a part of the code in script 1B_fips_data_clean.py to a state of interest.
 
-This project is useful in creating scatterplots, historgraphs, and heat maps that show potential trends in who receives IHP assistance within a state. By looking at variations in application rates, approval rates, and average amounts of assistance per application, this project can be a first step towards understanding if there are discrepancies within a state of which zip codes and counties apply, get approved, and 
-receive assistance. By including the race and income indciators from the Census, we can visualize trends between important socioeconomic demographics and IHP assistance variables to get initial insight into potential assistance patterns in a state and if these patterns signal equity.  
+This project is useful in creating scatterplots, histograms, and heat maps that show potential trends in who receives IHP assistance within a state. By looking at variations in application rates, approval rates, and average amounts of assistance per approved project, this tool can be a first step toward understanding if there are discrepancies of which zip codes and counties apply, get approved, and receive assistance. By including the race and income indicators from the Census, we can visualize trends between socioeconomic indicators and IHP assistance variables. This can give us an initial insight into IHP assistance patterns in a state and if these patterns signal equity.  
 
 *1) Run 1A_disaster clean.py*
 
@@ -12,39 +11,41 @@ receive assistance. By including the race and income indciators from the Census,
 This script cleans FEMA’s **DisasterDeclarationsSummaries.csv**. This file can be downloaded at:  https://www.fema.gov/openfema-data-page/disaster-declarations-summaries-v2 
 
 **Function:**
-It includes information on FEMA declared disasters including the declared disaster number and the county and state FIPS code for counties affected. The declared disaster number is a number that FEMA assigns to different disasters. The **DisasterDeclarationsSummaries.csv** file also includes the counties and states affected by each disaster. Cleaning steps included creating the GEOID from the state and county separate FIPS code.
+The csv file includes information on FEMA declared disasters including the declared disaster number and the county FIPS code for counties affected. The declared disaster number is a number that FEMA assigns to different disasters that are eligible for different kinds of FEMA assistance. The **DisasterDeclarationsSummaries.csv** file also includes the counties and states affected by each disaster that are eligible to apply for assistance. This script merged the county and state FIPS codes to create county GEOIDs.
+
+This script also only keeps declared disasters that have impacted that state of interest. You can change the acronym and state FIPS code to run the code through your state of interest at line 23 of the code. The acronym and state FIPS code are then saved into the series **state_list** that will be used throughout the code to only keep information about the state of interest. For a list of state acronyms and FIPS codes, please reference USDA's state FIPS codes information which can be found at: https://www.nrcs.usda.gov/wps/portal/nrcs/detail/?cid=nrcs143_013696
 
 **Outputs:**
-Change the acronym and state FIPS code to run the repository through your state of interest at line 23 for series state_list. The series is saved to an excel file titled **state_list.xlsx** that will be used in future scripts to run plots and maps for the state of interest.
+ Outputs include an excel file titled **state_list.xlsx** that will be used in future scripts to run plots and maps for the state of interest.
 
-**Disaster_number.csv** is a file that has all the disasters that have affected the state of interest. The file also includes the counties that were affected by the disaster.
+**Disaster_number.csv** has all the disasters that have affected the state of interest. The file also includes the counties that were affected by each declared disaster.
 
 *2) Run 1B_fips data clean.py*
 
 **Input:**
-This file inputs **disaster_number.csv** and aggregates the information by county to receive the number of disasters each county in the state of interest has experienced.
+This file inputs **disaster_number.csv** and aggregates the information by the county to receive the number of disasters each county in the state of interest has experienced.
 
 **Function:**
-This script checks to see if there are GEOIDs with different county names or if entries with the same county have more than one GEOID.
+This script checks to see if there are GEOIDs with different county names or if one county has more than one GEOID.
 
-GEOID codes with multiple county names may occur if there are misspellings or if counties have been renamed or redistricted throughout time. The print statement at line 36 will return any GEOID codes with multiple county names. Lines 40-43 can be used to clean any duplicated GEOID codes.
+GEOID codes may have multiple county names due to misspellings or if counties have been renamed or redistricted throughout time. The print statement at line 36 will return any GEOID codes with multiple county names. Lines 40-43 can be used to clean any duplicated GEOID codes.
 
-Line 56 prints the same county that has different GEOID codes. Counties with multiple GEOID codes may occur if FEMA has entered some entries without a county FIPS code. Counties without a county FIPS code end 000 (3 zeros). If counties are printed in Line 56, lines 58-68 should be run to change counties' correct GEOID to the correct GEOID if known.
+Line 56 prints any county that has different GEOID codes. Counties with multiple GEOID codes may occur if FEMA has entered some entries without a county FIPS code. Counties without a county FIPS code end in 000 (3 zeros). If there are any counties printed in Line 56, run lines 58-68 to change counties' GEOIDs to the correct GEOID if known.
 
 **Output:**
-This script creates **fip_disaster_count.csv** which contains an entry for each GEOID, county name, state, and the number of disasters the county has experienced over time.
+This script creates **fip_disaster_count.csv** that contains an entry for each GEOID, county name, and the number of disasters the county has experienced over time.
 
 *3) Run 2_ihp_info.py*
 
 **Input:** 
 This script uses the **Registration Intake Individuals Household Program.csv** from FEMA that can be downloaded at: https://www.fema.gov/openfema-data-page/registration-intake-and-individuals-household-program-ri-ihp-v2
 
-This document includes information on Individual and Household Program applications, approvals, and assistance. Each entry includes the city, zip code, declared disaster number, and county name. Information is documented at the zip code level and includes the county name but not a GEOID.
+This file provides information on Individual and Household Program applications, approvals, and assistance. Each entry includes the city, zip code, declared disaster number, and county name. Information is documented at the zip code level and includes the county name but not a GEOID.
 
-**disaster_number.csv** is used in this script to filter out applications for disasters that have not affected the state of interest. **State_list.xlsx** is also included to make sure that only entries for the state of interests are kept in the ihp dataframe.
+**disaster_number.csv** is used in this script to filter out applications for declared disasters that have not affected the state of interest. **State_list.xlsx** is also used to ensure that only entries for the state of interest are kept in the ihp dataframe.
 
 **Function:**
-This script cleans IHP assistance information to ensure zipcodes are either 5 or 9 digits long. Also, this script ensures that ihp[‘county’] is in the same format as the 'county' column in **fips_disaster_count.csv** as that will be the join merge key.
+This script cleans IHP assistance information to ensure zipcodes are either 5 or 9 digits long. Also, this script ensures that ihp[‘county’] is in the same format as the 'county' column in **fips_disaster_count.csv** as that will be the join merge key in a later script.
 
 **Output:**
 **ihp.csv** is the output. The csv file includes information on the amount of IHP assistance, number of applications, and approvals for each declared disaster number by zipcode.

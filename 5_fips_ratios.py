@@ -77,7 +77,7 @@ census_join ['non_white'] = (census_join['pop_total'] - census_join['pop_white']
 #%% Now we will find the state average for each of the variables calculated 
 #these will be used for reflines
 state = census_join.groupby('state').median()
-print (f'State summary: {state.describe()}')
+print (f'State summary: {state.median()}')
 state_list= list(state)
 state_pct_black = float(state['pop_black']/state['pop_total'])
 state_pct_white = float( state['pop_white']/state['pop_total'])
@@ -239,7 +239,7 @@ ax1.set_ylabel('Percent Non-white')
 ax2.set_xlabel('Average Amount per Project')
 ax2.set_ylabel('Percent White')
 ax1.axvline(x=state_average)
-ax1.axhline(y=state_pct_black)
+ax1.axhline(y=state_non_white)
 ax2.axvline(x=state_average)
 ax2.axhline(y=state_pct_white)
 fig1.suptitle('Average Amount per Approved Application by Race, \nfor counties with more than 0 applications')

@@ -38,7 +38,7 @@ print(f'List of Duplicated GEOID codes with Different County Names: \n{dups["GEO
 #%% This cell takes out random spaces to help with any discrepancies in spacing for renaming
 fips['county'] = fips['county'].str.replace(r'\s+','', regex=True)
 #%% Clean discrepancies in county names 
-namechange ={'FoxCrossing':	'Winnebago'}
+namechange ={'Ward9':	'Ascension'}
 fips['county'] = fips['county'].replace(namechange)
 #For Louisiana, Ward 9 is part of Ascension so I changed Ward 9 to fit Ascension. 
 

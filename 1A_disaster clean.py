@@ -20,7 +20,7 @@ dis = dis.rename(columns={'disasterNumber': 'disaster_number'})
 
 #%% Queries only the states in the list
 #This will make it easier if another state is of interest to change throughout the script
-state_list = pd.Series(['OK','40'])
+state_list = pd.Series(['LA','22'])
 #change line 23 to state of interest
 
 state_list.to_excel('state_list.xlsx')
