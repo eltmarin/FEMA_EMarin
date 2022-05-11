@@ -5,7 +5,7 @@ This project seeks to visualize FEMA assistance trends across income and race in
 
 This project is useful in creating scatterplots, histograms, and heat maps that show potential trends in who receives IHP assistance within a state. By looking at variations in application rates, approval rates, and average amounts of assistance per approved project, this tool can be a first step toward understanding if there are discrepancies in which zip codes and counties apply, get approved, and receive assistance. By including the race and income indicators from the Census, we can visualize trends between socioeconomic indicators and IHP assistance variables. This can give us an initial insight into IHP assistance patterns in a state and if these patterns signal equity.  
 
-*1) Run 1A_disaster clean.py*
+*1) Run 1A_disaster_clean.py*
 
 **Input:**
 This script cleans FEMA’s **DisasterDeclarationsSummaries.csv**. This file can be downloaded at:  https://www.fema.gov/openfema-data-page/disaster-declarations-summaries-v2 
@@ -20,7 +20,7 @@ This script also only keeps declared disasters that have impacted that state of 
 
 **Disaster_number.csv** has all the disasters that have affected the state of interest. The file also includes the counties that were affected by each declared disaster.
 
-*2) Run 1B_fips data clean.py*
+*2) Run 1B_fips_data_clean.py*
 
 **Input:**
 This file inputs **disaster_number.csv** and aggregates the information by the county to receive the number of disasters each county in the state of interest has experienced.
